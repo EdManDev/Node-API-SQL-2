@@ -1,15 +1,15 @@
 const config = require("../config/db");
 
 // ======================================================================================
-// @desc      Request Payment
+// @desc      Request Product
 // @route     GET /api/product
 // @access    Public
 // ======================================================================================
 
 exports.getProduct = (req, res) => {
 	config.getConnection(function (err, connection) {
-		var sql = "SELECT * FROM `products`";
-		connection.query(sql, (err, results, fields) => {
+		const sql = "SELECT * FROM `products`";
+		connection.query(sql, (err, results) => {
 			connection.end;
 			if (err) {
 				next(err);
@@ -22,15 +22,61 @@ exports.getProduct = (req, res) => {
 };
 
 // ======================================================================================
-// @desc      Response Payment
+// @desc      Create Product
 // @route     POST /api/product
 // @access    Public
 // ======================================================================================
 exports.postProduct = (req, res) => {
-	// res.json({ data: "post Product" });
 	config.getConnection(function (err, connection) {
-		// do whatever you want with your connection here
+		const sql = "INSERT INTO products SET ?";
+
+		const post = {
+			// id: req.body.id,
+			name: req.body.name,
+			price: req.body.price,
+			date: req.body.date,
+		};
+
+		connection.query(sql, post, (err, results) => {
+			connection.end;
+			if (err) {
+				next(err);
+			} else {
+				res.json(results);
+			}
+		});
+
+		connection.release();
 	});
 };
 
-// var sql = "INSERT INTO `products`SET `id`=?, `name`=?, `price`=?, `date`=?";
+// ======================================================================================
+// @desc      Update Product
+// @route     PUT /api/product
+// @access    Public
+// ======================================================================================
+exports.putProduct = (req, res) => {
+	config.getConnection(function (err, connection) {
+		const sql = "INSERT INTO products(name, price) VALUES(?, ?)";
+
+		const id = req.params.id;
+
+		const post = {
+			id: req.body.id,
+			name: req.body.name,
+			price: req.body.price,
+			date: req.body.date,
+		};
+
+		connection.query(sql, post, (err, results) => {
+			connection.end;
+			if (err) {
+				next(err);
+			} else {
+				res.json(results);
+			}
+		});
+
+		connection.release();
+	});
+};
