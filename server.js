@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("express");
+const bodyParser = require("body-parser");
+
 dotenv.config();
 const morgan = require("morgan");
 
@@ -14,6 +16,7 @@ const productRoutes = require("./routes/Product.Routes");
 const app = express();
 
 app.use(morgan("dev"));
+app.use(bodyParser.json());
 app.use(cors(""));
 
 // connect database
