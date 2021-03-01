@@ -1,0 +1,6 @@
+app.get('/save',function(req,res){
+    var post  = {from:'me', to:'you', msg:'hi'};
+    db.query('INSERT INTO messages SET ?', post, function(err, result) {
+      if (err) throw err;
+    });
+});
