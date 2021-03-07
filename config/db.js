@@ -23,7 +23,9 @@ const mysql = require("mysql");
 // };
 
 const databaseOptions = mysql.createPool({
-	connectionLimit: 10,
+	// connectionLimit: 10,
+	// queueLImit: 50,
+	// waitForConnection: true,
 	host: process.env.DB_HOST,
 	port: process.env.DB_PORT,
 	user: process.env.DB_USER,
